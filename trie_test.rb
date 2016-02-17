@@ -15,8 +15,20 @@ class TrieTest < Minitest::Test
     assert trie
   end
 
-  def test_can_insert_node
+  def test_initializes_with_root_node
     assert trie.root
+  end
+
+  def test_can_insert_into_trie
+    trie.insert("dog")
+    assert trie.root.children.include?("d")
+    current = trie.root.children["d"]
+    assert current.children.include?("o")
+  end
+
+  def test_can_insert_another_word
+    trie.insert("dog")
+    trie.insert("cat")
   end
 
 end

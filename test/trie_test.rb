@@ -1,3 +1,4 @@
+
 require 'simplecov'
 SimpleCov.start
 gem 'minitest', '~> 5.2'
@@ -69,7 +70,7 @@ class TrieTest < Minitest::Test
   end
 
   def test_can_weight_suggestions_against_substring
-    trie.load("../lib/dictionary.txt")
+    trie.load("lib/dictionary.txt")
     trie.select("piz", "pizzeria")
 
     suggest = ["pizzeria", "pize", "pizza", "pizzicato", "pizzle"]
@@ -78,7 +79,7 @@ class TrieTest < Minitest::Test
   end
 
   def test_can_weight_multiple_words_and_substrings_from_requirements_example
-    trie.load("../lib/dictionary.txt")
+    trie.load("lib/dictionary.txt")
     trie.select("piz", "pizzeria")
     trie.select("piz", "pizzeria")
     trie.select("piz", "pizzeria")

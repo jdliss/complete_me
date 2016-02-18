@@ -1,4 +1,4 @@
 source 'http://rubygems.org'
 
-gem 'minitest', '~> 5.2'
 gem 'simplecov', :require => false, :group => :test
+gem 'minitest', '~> 5.2'

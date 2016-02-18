@@ -83,5 +83,4 @@ class Trie
     end
     weights
   end
-
 end

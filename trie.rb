@@ -39,8 +39,6 @@ class Trie
     find_suggestions(string, current)
   end
 
-  
-
   def find_suggestions(string, current = root)
     unless current.children == {}
       current.children.keys.each do |key|

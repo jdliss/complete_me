@@ -35,9 +35,11 @@ class Trie
       current.children.keys.include?(char) ?
       current = current.children[char] : "No suggestions found"
     end
-    
+
     find_suggestions(string, current)
   end
+
+  
 
   def find_suggestions(string, current = root)
     unless current.children == {}

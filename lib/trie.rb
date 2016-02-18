@@ -2,12 +2,13 @@ require_relative 'node'
 
 class Trie
 
-  attr_accessor :root, :count, :weights
+  attr_accessor :root,
+                :count,
+                :weights
 
   def initialize
     @root = Node.new
     @count = 0
-
     @weights = {}
   end
 
@@ -23,11 +24,13 @@ class Trie
     @count
   end
 
+
   def populate(contents_of_file)
     contents_of_file.split("\n").map do |word|
       insert(word)
     end.last
   end
+
 
   def load(file)
     temp = File.read(file)
@@ -37,17 +40,22 @@ class Trie
   end
 
 
-  def suggest(string, n = 0, current = root)
+  def suggest(string, current = root)
     return "Invalid input" if string == ""
 
     @suggestions = []
     @word = ""
     string.each_char do |char|
-      current.children.keys.include?(char) ? current = current.children[char] : (return "No suggestions found")
+      current.children.keys.include?(char) ?
+      current = current.children[char] : (return "No suggestions found")
     end
 
     find_suggestions(string, current)
+    return move_weighted_to_front(string)
+  end
 
+
+  def move_weighted_to_front(string)
     temp = []
     unless weights[string] == nil
       weights[string].sort_by { |array| array[1] }.reverse.flatten.each do |element|
@@ -56,11 +64,9 @@ class Trie
     end
 
     temp.each { |word| @suggestions.delete(word) }
-
     return (temp + @suggestions)
-
-
   end
+
 
   def find_suggestions(string, current = root)
     unless current.children == {}
@@ -73,6 +79,7 @@ class Trie
     end
     @suggestions
   end
+
 
   def select(string, word)
     if weights.keys.include?(string)

@@ -5,4 +5,4 @@ rvm:
  - "2.3.0"
  # - rbx
 # uncomment this line if your project needs to run something other than `rake`:
-script: bundle exec ruby test/trie_test.rb
+script: bundle exec ruby $PWD/test/complete_me_test.rb

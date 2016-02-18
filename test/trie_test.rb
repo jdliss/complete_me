@@ -1,4 +1,6 @@
 
+# require "codeclimate-test-reporter"
+# CodeClimate::TestReporter.start
 require 'simplecov'
 SimpleCov.start
 gem 'minitest', '~> 5.2'

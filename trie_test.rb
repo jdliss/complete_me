@@ -58,4 +58,16 @@ class TrieTest < Minitest::Test
     assert suggestions, trie.suggest("asfg")
   end
 
+  def test_can_weight_suggestions_against_substring
+    trie.load("test.txt")
+    trie.select("piz", "pizzeria")
+
+    suggest = ["pizzeria", "pize", "pizza", "pizzicato", "pizzle"]
+
+    assert_equal suggest, trie.suggest("piz")
+  end
+
+  def test_can_weight_multiple_words_and_substrings
+
+  end
 end

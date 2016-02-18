@@ -6,13 +6,13 @@ SimpleCov.start
 gem 'minitest', '~> 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative '../lib/trie'
+require_relative '../lib/complete_me'
 
-class TrieTest < Minitest::Test
+class ComepleteMeTest < Minitest::Test
   attr_accessor :trie, :dict_trie
 
   def setup
-    @trie = Trie.new
+    @trie = CompleteMe.new
   end
 
   def test_can_initialize_new_trie
@@ -26,8 +26,10 @@ class TrieTest < Minitest::Test
   def test_can_insert_into_trie
     trie.insert("dog")
     assert trie.root.children.include?("d")
+
     current = trie.root.children["d"]
     assert current.children.include?("o")
+
     current = current.children["o"]
     assert current.children.include?("g")
 
@@ -39,8 +41,10 @@ class TrieTest < Minitest::Test
 
     assert trie.root.children.include?("c")
     current = trie.root.children["c"]
+
     assert current.children.include?("a")
     current = current.children["a"]
+
     assert current.children.include?("t")
   end
 
@@ -48,8 +52,8 @@ class TrieTest < Minitest::Test
     trie.insert("dough")
     trie.insert("dog")
     trie.insert("down")
-
     suggestions = ["dough", "dog", "down"]
+
     assert_equal suggestions, trie.suggest("do")
   end
 
@@ -74,7 +78,6 @@ class TrieTest < Minitest::Test
   def test_can_weight_suggestions_against_substring
     trie.load("lib/dictionary.txt")
     trie.select("piz", "pizzeria")
-
     suggest = ["pizzeria", "pize", "pizza", "pizzicato", "pizzle"]
 
     assert_equal suggest, trie.suggest("piz")
@@ -85,7 +88,6 @@ class TrieTest < Minitest::Test
     trie.select("piz", "pizzeria")
     trie.select("piz", "pizzeria")
     trie.select("piz", "pizzeria")
-
     result = ["pizzeria", "pize", "pizza", "pizzicato", "pizzle"]
 
     assert_equal result, trie.suggest("piz")
@@ -93,7 +95,6 @@ class TrieTest < Minitest::Test
     trie.select("pizz", "pizza")
     trie.select("pizz", "pizza")
     trie.select("pizz", "pizzicato")
-
     result = ["pizza", "pizzicato", "pizzeria", "pizzle"]
 
     assert_equal result, trie.suggest("pizz")

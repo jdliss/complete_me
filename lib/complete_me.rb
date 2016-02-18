@@ -1,6 +1,6 @@
 require_relative 'node'
 
-class Trie
+class CompleteMe
 
   attr_accessor :root,
                 :count,
@@ -12,12 +12,13 @@ class Trie
     @weights = {}
   end
 
+
   def insert(word, n = 0, current = root)
     unless current.children.include?(word[n])
       current.children[word[n]] = Node.new
       current.children[word[n]].end_of_word = true && @count += 1 if n == word.length - 1
     end
-    
+
     insert(word, n+1, current.children[word[n]]) if n < word.length - 1
     @count
   end
@@ -40,7 +41,6 @@ class Trie
 
   def suggest(string, current = root)
     return "Invalid input" if string == ""
-
     @suggestions = []
     @word = ""
     string.each_char do |char|

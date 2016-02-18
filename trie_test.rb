@@ -40,4 +40,22 @@ class TrieTest < Minitest::Test
     assert current.children.include?("t")
   end
 
+  def test_suggests_words_based_on_string
+    trie.insert("dough")
+    trie.insert("dog")
+    trie.insert("down")
+
+    suggestions = ["dough", "dog", "down"]
+    assert_equal suggestions, trie.suggest("do")
+  end
+
+  def test_cant_find_suggestions_for_string
+    trie.insert("dough")
+    trie.insert("dog")
+    trie.insert("down")
+    suggestions = "No suggestions found."
+
+    assert suggestions, trie.suggest("asfg")
+  end
+
 end

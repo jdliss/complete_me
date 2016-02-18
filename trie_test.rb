@@ -1,11 +1,12 @@
+require 'simplecov'
+SimpleCov.start
 gem 'minitest', '~> 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative 'trie'
 
 class TrieTest < Minitest::Test
-
-  attr_accessor :trie
+  attr_accessor :trie, :dict_trie
 
   def setup
     @trie = Trie.new
@@ -58,8 +59,17 @@ class TrieTest < Minitest::Test
     assert suggestions, trie.suggest("asfg")
   end
 
+  def test_wont_load_entire_tree_when_empty_string_is_given
+    trie.insert("dough")
+    trie.insert("dog")
+    trie.insert("down")
+    suggestions = "Invalid input"
+
+    assert suggestions, trie.suggest("")
+  end
+
   def test_can_weight_suggestions_against_substring
-    trie.load("test.txt")
+    trie.load("/usr/share/dict/words")
     trie.select("piz", "pizzeria")
 
     suggest = ["pizzeria", "pize", "pizza", "pizzicato", "pizzle"]
@@ -67,7 +77,22 @@ class TrieTest < Minitest::Test
     assert_equal suggest, trie.suggest("piz")
   end
 
-  def test_can_weight_multiple_words_and_substrings
+  def test_can_weight_multiple_words_and_substrings_from_requirements_example
+    trie.load("/usr/share/dict/words")
+    trie.select("piz", "pizzeria")
+    trie.select("piz", "pizzeria")
+    trie.select("piz", "pizzeria")
 
+    result = ["pizzeria", "pize", "pizza", "pizzicato", "pizzle"]
+
+    assert_equal result, trie.suggest("piz")
+
+    trie.select("pizz", "pizza")
+    trie.select("pizz", "pizza")
+    trie.select("pizz", "pizzicato")
+
+    result = ["pizza", "pizzicato", "pizzeria", "pizzle"]
+
+    assert_equal result, trie.suggest("pizz")
   end
 end

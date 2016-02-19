@@ -2,4 +2,4 @@
 
 [![Test Coverage](https://codeclimate.com/github/jdliss/complete_me/badges/coverage.svg)](https://codeclimate.com/github/jdliss/complete_me/coverage)
 
-### **Nuff said**
+### **Yup.**

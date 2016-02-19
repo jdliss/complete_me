@@ -52,19 +52,6 @@ class CompleteMe
   end
 
 
-  def move_weighted_to_front(string)
-    temp = []
-    unless weights[string] == nil
-      weights[string].sort_by { |array| array[1] }.reverse.flatten.each do |element|
-        temp << element if element.class == String
-      end
-    end
-
-    temp.each { |word| @suggestions.delete(word) }
-    return (temp + @suggestions)
-  end
-
-
   def find_suggestions(string, current = root)
     unless current.children == {}
       current.children.each_key do |key|
@@ -75,6 +62,19 @@ class CompleteMe
       end
     end
     @suggestions
+  end
+
+
+  def move_weighted_to_front(string)
+    temp = []
+    unless weights[string] == nil
+      weights[string].sort_by { |array| array[1] }.reverse.flatten.each do |element|
+        temp << element if element.class == String
+      end
+    end
+
+    temp.each { |word| @suggestions.delete(word) }
+    return (temp + @suggestions)
   end
 
 
